@@ -68,6 +68,17 @@ class ArticleAdminController extends BaseController
     }
 
     /**
+     * @Route("/admin/upload/test", name="upload_test")
+     */
+    public function temporaryUploadAction(Request $request)
+    {
+        /** @var UploadedFile $uploadedFile */
+        $uploadedFile = $request->files->get('image');
+        $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
+        dd($uploadedFile->move($destination));
+    }
+
+    /**
      * @Route("/admin/article/location-select", name="admin_article_location_select")
      * @IsGranted("ROLE_USER")
      */
