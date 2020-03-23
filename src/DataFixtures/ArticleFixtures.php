@@ -7,6 +7,8 @@ use App\Entity\Comment;
 use App\Entity\Tag;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use App\Service\UploaderHelper;
+
 
 class ArticleFixtures extends BaseFixture implements DependentFixtureInterface
 {
@@ -21,6 +23,13 @@ class ArticleFixtures extends BaseFixture implements DependentFixtureInterface
         'mercury.jpeg',
         'lightspeed.png',
     ];
+
+    private $uploaderHelper;
+
+    public function __construct(UploaderHelper $uploaderHelper)
+    {
+        $this->uploaderHelper = $uploaderHelper;
+    }
 
     protected function loadData(ObjectManager $manager)
     {
