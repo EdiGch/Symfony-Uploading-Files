@@ -1,4 +1,7 @@
 {
+    "aws/aws-sdk-php": {
+        "version": "3.133.41"
+    },
     "behat/transliterator": {
         "version": "v1.2.0"
     },
@@ -107,6 +110,9 @@
     "guzzlehttp/psr7": {
         "version": "1.5.2"
     },
+    "imagine/imagine": {
+        "version": "1.2.3"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -122,11 +128,36 @@
     "knplabs/knp-time-bundle": {
         "version": "1.9.0"
     },
+    "league/flysystem": {
+        "version": "1.0.66"
+    },
+    "league/flysystem-aws-s3-v3": {
+        "version": "1.0.24"
+    },
+    "league/flysystem-cached-adapter": {
+        "version": "1.0.9"
+    },
+    "liip/imagine-bundle": {
+        "version": "1.8",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.8",
+            "ref": "1d42bc3f713130582e6e0c475c49bc327ab0a2a2"
+        },
+        "files": [
+            "./config/packages/liip_imagine.yaml",
+            "./config/routes/liip_imagine.yaml"
+        ]
+    },
     "michelf/php-markdown": {
         "version": "1.8.0"
     },
     "monolog/monolog": {
         "version": "1.24.0"
+    },
+    "mtdowling/jmespath.php": {
+        "version": "2.5.0"
     },
     "nexylan/slack": {
         "version": "v2.1.0"
@@ -143,8 +174,17 @@
     "ocramius/proxy-manager": {
         "version": "2.2.2"
     },
-    "php-http/cache-plugin": {
-        "version": "1.6.0"
+    "oneup/flysystem-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "0eb87bba411c227da027fe5f7c1dc7954b02f242"
+        },
+        "files": [
+            "./config/packages/oneup_flysystem.yaml"
+        ]
     },
     "php-http/client-common": {
         "version": "1.9.1"
