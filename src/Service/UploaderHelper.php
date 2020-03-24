@@ -8,52 +8,37 @@ use Gedmo\Sluggable\Util\Urlizer;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Asset\Context\RequestStackContext;
 use Symfony\Component\HttpFoundation\File\File;
-
+use League\Flysystem\FilesystemInterface;
 
 
 class UploaderHelper
 {
 
     const ARTICLE_IMAGE = 'article_image';
-
-    /**
-     * @var string
-     */
-    private $uploadsPath;
-    /**
-     * @var RequestStackContext
-     */
+    private $filesystem;
     private $requestStackContext;
-
-    public function __construct(string $uploadsPath, RequestStackContext $requestStackContext)
+    public function __construct(FilesystemInterface $publicUploadsFilesystem, RequestStackContext $requestStackContext)
     {
-//$this->getParameter('kernel.project_dir') . '/public/uploads
-        $this->uploadsPath = $uploadsPath;
+        $this->filesystem = $publicUploadsFilesystem;
         $this->requestStackContext = $requestStackContext;
     }
-
     public function uploadArticleImage(File $file): string
     {
-
-        $destination = $this->uploadsPath.'/'.self::ARTICLE_IMAGE;
-
         if ($file instanceof UploadedFile) {
             $originalFilename = $file->getClientOriginalName();
         } else {
             $originalFilename = $file->getFilename();
         }
-
         $newFilename = Urlizer::urlize(pathinfo($originalFilename, PATHINFO_FILENAME)).'-'.uniqid().'.'.$file->guessExtension();
-        $file->move(
-            $destination,
-            $newFilename
+        $this->filesystem->write(
+            self::ARTICLE_IMAGE.'/'.$newFilename,
+            file_get_contents($file->getPathname())
         );
-
         return $newFilename;
     }
-
     public function getPublicPath(string $path): string
     {
+        // needed if you deploy under a subdirectory
         return $this->requestStackContext
                 ->getBasePath().'/uploads/'.$path;
     }

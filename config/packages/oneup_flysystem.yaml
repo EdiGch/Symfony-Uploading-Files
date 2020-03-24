@@ -7,4 +7,3 @@ oneup_flysystem:
     filesystems:
         public_uploads_filesystem:
             adapter: public_uploads_adapter
-            alias: League\Flysystem\Filesystem
