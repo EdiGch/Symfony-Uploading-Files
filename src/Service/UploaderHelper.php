@@ -22,7 +22,7 @@ class UploaderHelper
         $this->filesystem = $publicUploadsFilesystem;
         $this->requestStackContext = $requestStackContext;
     }
-    public function uploadArticleImage(File $file): string
+    public function uploadArticleImage(File $file, ?string $existingFilename): string
     {
         if ($file instanceof UploadedFile) {
             $originalFilename = $file->getClientOriginalName();
@@ -30,10 +30,17 @@ class UploaderHelper
             $originalFilename = $file->getFilename();
         }
         $newFilename = Urlizer::urlize(pathinfo($originalFilename, PATHINFO_FILENAME)).'-'.uniqid().'.'.$file->guessExtension();
-        $this->filesystem->write(
+        $stream = fopen($file->getPathname(), 'r');
+        $this->filesystem->writeStream(
             self::ARTICLE_IMAGE.'/'.$newFilename,
-            file_get_contents($file->getPathname())
+            $stream
         );
+        if (is_resource($stream)) {
+            fclose($stream);
+        }
+        if ($existingFilename) {
+            $this->filesystem->delete(self::ARTICLE_IMAGE.'/'.$existingFilename);
+        }
         return $newFilename;
     }
     public function getPublicPath(string $path): string
