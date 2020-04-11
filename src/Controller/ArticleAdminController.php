@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Form\ArticleFormType;
 use App\Repository\ArticleRepository;
 use App\Service\UploaderHelper;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Gedmo\Sluggable\Util\Urlizer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -16,6 +17,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleAdminController extends BaseController
 {
+
+    /**
+     * @var \App\Controller\Connection
+     */
+    private $connection;
+
+    public function __construct(Connection $connection)
+    {
+        $this->connection = $connection;
+    }
+
     /**
      * @Route("/admin/article/new", name="admin_article_new")
      * @IsGranted("ROLE_ADMIN_ARTICLE")
